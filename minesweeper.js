@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', startGame)
 
 // Define your `board` object here!
 var board = { cells: []};
+createCells(6, 6);
 
 function createCells(numCol, numRow) {
   //code that generates random no. of bombs
@@ -47,7 +48,6 @@ function createCells(numCol, numRow) {
     }
   }
 }
-createCells(6, 6);
 
 function Cell (row, col, isMine, hidden) {
   this.row = row;
@@ -107,7 +107,14 @@ function checkForWin () {
 }
 
 function resetBoard() {
-  location.reload();
+  var domBoard = document.getElementsByClassName('board')[0];
+  while (domBoard.hasChildNodes()) {
+    domBoard.removeChild(domBoard.firstChild);
+  }
+
+  board = { cells: []};
+  createCells(6, 6);
+  startGame();
 }
 
 // Define this function to count the number of mines around the cell
