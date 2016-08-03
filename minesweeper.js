@@ -90,7 +90,24 @@ function checkForWin () {
   // detected that they've won, that is!)
   if(hasWon) {
     lib.displayMessage('You win!');
+    window.setTimeout(resetBoard, 2000);
   }
+  else {
+    var hasLost = false;
+    for(var i = 0; i < board.cells.length; i++) {
+      if(board.cells[i].isMine && !board.cells[i].hidden) {
+        hasLost = true;
+        break;
+      }
+    }
+    if(hasLost) {
+      window.setTimeout(resetBoard, 2000);
+    }
+  }
+}
+
+function resetBoard() {
+  location.reload();
 }
 
 // Define this function to count the number of mines around the cell
