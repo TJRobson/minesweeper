@@ -4,9 +4,46 @@ document.addEventListener('DOMContentLoaded', startGame)
 var board = { cells: []};
 
 function createCells(numCol, numRow) {
+  //code that generates random no. of bombs
+  var numBombs = Math.ceil((numCol * numRow) * 0.15);
+  numBombs += Math.floor(Math.random() * 5) -2;
+  if(numBombs <= 0) {
+    numBombs = 1;
+  }
+
+  var bombIndexes = [];
+  for(var h = 0; h <= numBombs; h++) {
+    //creates new bomb
+    var currentIndex = 0;
+    var hasValidIndex = false;
+    //loops until an index is generated that isn't already in bombIndexes
+    while(hasValidIndex == false) {
+      currentIndex = Math.floor(Math.random() * (numCol * numRow));
+      hasValidIndex = true;
+      //loops through bombIndexes to check that currentIndex isn't already in it
+      for(var l = 0; l < bombIndexes.length; l++) {
+        if(bombIndexes[l] == currentIndex) {
+          hasValidIndex = false;
+          break;
+        }
+      }
+      if(hasValidIndex == true) {
+        bombIndexes.push(currentIndex);
+      }
+    }
+  }
+
   for(var i = 0; i < numRow; i++) {
     for(var j= 0; j < numCol; j++) {
-      board.cells[(i * numCol) + j] = new Cell(i, j, false, true);
+      var isBomb = false;
+      for(var h = 0; h < bombIndexes.length; h++) {
+        //loops through bombIndexes to check in currentIndex is a bomb
+        if(bombIndexes[h] == (i * numCol) + j) {
+          isBomb = true;
+          break;
+        }
+      }
+      board.cells[(i * numCol) + j] = new Cell(i, j, isBomb, true);
     }
   }
 }
