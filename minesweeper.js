@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', startGame)
 
 // Define your `board` object here!
 var board = { cells: []};
-createCells(3, 3);
+createCells(6, 6);
 
 function createCells(numCol, numRow) {
   //code that generates random no. of bombs
@@ -103,6 +103,8 @@ function checkForWin () {
       }
     }
     if(hasLost) {
+      var bombSound = new Audio('sounds/short-explosion.wav');
+      bombSound.play();
       window.setTimeout(resetBoard, 2000);
     }
   }
@@ -115,7 +117,7 @@ function resetBoard() {
   }
 
   board = { cells: []};
-  createCells(3, 3);
+  createCells(6, 6);
   startGame();
 }
 
